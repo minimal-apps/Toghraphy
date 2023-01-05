@@ -1,2 +1,2 @@
 # Toghraphy
- easier memorization for high schoolers students
+ easier memorization for high schoolers
