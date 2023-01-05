@@ -1,0 +1,48 @@
+name: hg_sips
+description: A Very Good Project created by Very Good CLI.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+  flutter: 3.3.3
+
+dependencies:
+  bloc: ^8.1.0
+  cloud_firestore: ^4.0.2
+  equatable: ^2.0.5
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.1
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+  questions_api:
+    path: packages/questions_api
+  questions_repository:
+    path: packages/questions_repository
+  firestore_questions_api:
+    path: packages/firestore_questions_api
+  cool_dropdown:
+    path: packages/cool_dropdown 
+  flow_builder: ^0.0.9
+  firebase_core: ^2.1.1
+  hydrated_bloc: ^9.0.0
+  path_provider: ^2.0.11
+  shared_preferences: ^2.0.15
+dev_dependencies:
+  bloc_test: ^9.1.0
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.3.0
+  very_good_analysis: ^3.1.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  fonts:
+    - family: Tajawal
+      fonts:
+        - asset: fonts/Tajawal-Medium.ttf
+        - asset: fonts/Tajawal-Black.ttf
+          weight: 700
