@@ -68,7 +68,7 @@ class FirestoreQuestionsAPI implements QuestionsAPI {
     return await questionsCollection
         .where('lesson')
         .snapshots()
-        .last
+        .first
         .then((snapshot) {
       int randomIndex = Random().nextInt(snapshot.docs.length);
       final element = snapshot.docs[randomIndex].data();

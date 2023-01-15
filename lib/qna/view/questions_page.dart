@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hg_sips/qna/qna.dart';
 import 'package:hg_sips/themes/theme.dart';
 import 'package:questions_repository/questions_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QuestionsPage extends StatelessWidget {
   const QuestionsPage({super.key});
@@ -170,6 +171,7 @@ class QuestionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final qnaState = context.watch<QnaBloc>().state;
+    print('hello');
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Column(
@@ -189,8 +191,9 @@ class QuestionSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Text(
-              "",
-              // qnaState.question!.questionContent,
+              qnaState.question == null
+                  ? ''
+                  : qnaState.question!.questionContent,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 25,
@@ -242,15 +245,30 @@ class _DropDownAppBarState extends State<DropDownAppBar> {
   ];
   List<String> dropDownLessons = [''];
   String mainDropDown = '';
+  String userName = '';
+  int userScore = 0;
   @override
   void initState() {
     dropDownLessons = historyLessons;
     mainDropDown = 'التاريخ';
+    getUserPrefs();
     super.initState();
+  }
+
+  Future<void> getUserPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('name')!;
+      
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final qnaState = context.watch<QnaBloc>().state;
+    
+      
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Column(
@@ -261,7 +279,7 @@ class _DropDownAppBarState extends State<DropDownAppBar> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  "مرحبا مجددا محمود",
+                  'مرحبا  $userName',
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
@@ -275,7 +293,7 @@ class _DropDownAppBarState extends State<DropDownAppBar> {
                       border:
                           Border.all(color: widget.themeState.secondaryColor)),
                   child: Text(
-                    "النقاط : 15",
+                    "النقاط : ${qnaState.score}",
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 15,

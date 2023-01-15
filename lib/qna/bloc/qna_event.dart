@@ -8,6 +8,7 @@ class QnaQuestionRequested extends QnaEvent {
   @override
   List<Object> get props => [];
 }
+
 class QnaFilterChanged extends QnaEvent {
   QnaFilterChanged({required this.filter});
   final String filter;
@@ -23,6 +24,16 @@ class QnaAnswerChanged extends QnaEvent {
 
   @override
   List<Object> get props => [text];
+}
+
+class QnaScoreChanged extends QnaEvent {
+  QnaScoreChanged({
+    required this.score,
+  });
+  final int score;
+
+  @override
+  List<Object> get props => [score];
 }
 
 class QnaAnswerSubmitted extends QnaEvent {

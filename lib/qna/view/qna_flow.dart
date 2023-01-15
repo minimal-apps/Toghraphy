@@ -18,7 +18,7 @@ class QnaFlow extends StatelessWidget {
         BlocProvider(
           create: (BuildContext context) =>
               QnaBloc(questionsRepository: context.read<QuestionsRepository>())
-                ..add(QnaQuestionRequested()),
+                ..add(QnaQuestionRequested())..add(QnaScoreChanged(score: 0)),
         ),
       ],
       child: const QnaFlowView(),

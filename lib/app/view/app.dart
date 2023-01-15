@@ -20,7 +20,7 @@ class App extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => AppBloc(),
+            create: (context) => AppBloc()..add(AppOpened()),
           ),
           BlocProvider(
             create: (context) => ThemeBloc(),

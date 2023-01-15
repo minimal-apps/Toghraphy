@@ -7,11 +7,4 @@ abstract class AppEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class NavigationTriggered extends AppEvent {
-  const NavigationTriggered({
-    required this.status,
-  });
-  final PageStatus status;
-  @override
-  List<Object> get props => [status];
-}
+class AppOpened extends AppEvent {}

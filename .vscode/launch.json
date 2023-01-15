@@ -5,13 +5,15 @@
     "version": "0.2.0",
     "configurations": [
             {
-                    "name": "hg_sips_mobile",
+                    "name": "hg_sips_mobile production",
                     "program": "lib/main_production.dart",
                     "request": "launch",
                     "type": "dart",
                     "args": [
                             "--flavor",
-                            "production" //development or staging or production
+                            "production",
+                            "-t",
+                            "lib/main_production.dart", //development or staging or production
                         ]
             }
     ]

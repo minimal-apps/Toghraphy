@@ -16,6 +16,7 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     on<QnaQuestionRequested>(_onQnaQuestionRequested);
     on<QnaFilterChanged>(_onQnaFilterChanged);
     on<QnaAnswerChanged>(_onQnaAnswerChanged);
+    on<QnaScoreChanged>(_onQnaScoreChanged);
     on<QnaAnswerSubmitted>(_onQnaAnswerSubmitted);
     on<QnaAnswerRequested>(_onQnaAnswerRequested);
     on<QnaQuestionRegistered>(_onQnaQuestionRegistered);
@@ -28,6 +29,7 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     QnaQuestionRequested event,
     Emitter<QnaState> emit,
   ) async {
+    print(state.filter);
     final question = await _questionsRepository.getRandomQuestion(state.filter);
     emit(state.copyWith(question: question));
   }
@@ -46,16 +48,28 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     emit(state.copyWith(userAnswer: event.text));
   }
 
+  Future<void> _onQnaScoreChanged(
+    QnaScoreChanged event,
+    Emitter<QnaState> emit,
+  ) async {
+    if (event.score == 0) {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.getInt('score') ?? prefs.setInt('score', 0);
+      emit(state.copyWith(score: prefs.getInt('score')!));
+    } else {
+      emit(state.copyWith(score: event.score));
+    }
+  }
+
   Future<void> _onQnaAnswerSubmitted(
     QnaAnswerSubmitted event,
     Emitter<QnaState> emit,
   ) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.getInt('score') ?? prefs.setInt('score', 0);
-    final score = prefs.getInt('score');
-    // ! algorithm
-    // ! here here here
-    await prefs.setInt("score", score! + 10);
+    // final prefs = await SharedPreferences.getInstance();
+    // prefs.getInt('score') ?? prefs.setInt('score', 0);
+    // final score = prefs.getInt('score');
+
+    // await prefs.setInt("score", score! + 10);
   }
 
   Future<void> _onQnaAnswerRequested(
@@ -72,8 +86,6 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     QnaNavigationTriggered event,
     Emitter<QnaState> emit,
   ) {
-    print("here");
     emit(state.copyWith(status: event.status));
-    print(state);
   }
 }

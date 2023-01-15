@@ -1,12 +1,12 @@
 part of 'app_bloc.dart';
 
 enum PageStatus {
-  questionPage,
-  answerPage,
+  authenticated,
+  unauthenticated,
 }
 
 class AppState extends Equatable {
-  const AppState({this.status = PageStatus.questionPage});
+  const AppState({this.status = PageStatus.unauthenticated});
   final PageStatus status;
   @override
   List<Object> get props => [status];

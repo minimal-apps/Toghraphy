@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hg_sips/app/app.dart';
 import 'package:hg_sips/qna/qna.dart';
 import 'package:hg_sips/themes/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AnswerPage extends StatelessWidget {
   const AnswerPage({super.key});
@@ -39,37 +40,6 @@ class AnswerView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "جوابك",
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
-                              color: themeState.secondaryColor),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                            color: themeState.bubbleColor,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Text(
-                            context.watch<QnaBloc>().state.userAnswer ?? '',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
-                              color: themeState.primaryColor,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20, top: 10),
-                    child: Column(
-                      children: [
-                        Text(
                           "الجواب الصحيح",
                           style: TextStyle(
                               fontSize: 25,
@@ -97,21 +67,76 @@ class AnswerView extends StatelessWidget {
                     ),
                   ),
                   Padding(
+                    padding: const EdgeInsets.only(bottom: 20, top: 10),
+                    child: Column(
+                      children: [
+                        Text(
+                          "جوابك",
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w700,
+                              color: themeState.secondaryColor),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                            color: themeState.bubbleColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Text(
+                            context.watch<QnaBloc>().state.userAnswer ?? '',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w700,
+                              color: themeState.primaryColor,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SimpleButton(
-                            icon: Icons.check,
-                            text: "جوابك صحيح",
-                            color: themeState.primaryColor,
-                            onPressed: () {}),
+                          icon: Icons.check,
+                          text: 'جوابك صحيح',
+                          color: themeState.primaryColor,
+                          onPressed: () async {
+                            final prefs = await SharedPreferences.getInstance();
+                            final newScore = prefs.getInt('score')! + 5;
+                            await prefs.setInt('score', newScore);
+                            context.read<QnaBloc>()
+                              ..add(QnaScoreChanged(score: newScore))
+                              ..add(
+                                QnaNavigationTriggered(
+                                  status: QnaPageStatus.questionPage,
+                                ),
+                              );
+                          },
+                        ),
                         SimpleButton(
                             icon: Icons.close,
                             text: "جوابك غير صحيح",
                             color: themeState.secondaryColor,
                             background: themeState.primaryColor,
-                            onPressed: () {})
+                            onPressed: () async {
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              final newScore = prefs.getInt('score')! - 5;
+                              await prefs.setInt('score', newScore);
+                              context.read<QnaBloc>()
+                                ..add(QnaScoreChanged(score: newScore))
+                                ..add(
+                                  QnaNavigationTriggered(
+                                    status: QnaPageStatus.questionPage,
+                                  ),
+                                );
+                            })
                       ],
                     ),
                   ),
@@ -134,7 +159,6 @@ class AnswerView extends StatelessWidget {
                 onPressed: () {
                   context.read<QnaBloc>().add(QnaNavigationTriggered(
                       status: QnaPageStatus.questionPage));
-                  Navigator.pop(context);
                 },
               ),
             ),
