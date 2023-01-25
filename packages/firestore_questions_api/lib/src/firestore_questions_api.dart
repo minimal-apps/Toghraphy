@@ -30,51 +30,38 @@ class FirestoreQuestionsAPI implements QuestionsAPI {
     }
   }
 
-  String getRandomGeneratedId() {
-    const int AUTO_ID_LENGTH = 20;
-    const String AUTO_ID_ALPHABET =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    const int maxRandom = AUTO_ID_ALPHABET.length;
-    final Random randomGen = Random();
-
-    String id = '';
-    for (int i = 0; i < AUTO_ID_LENGTH; i++) {
-      id = id + AUTO_ID_ALPHABET[randomGen.nextInt(maxRandom)];
-    }
-    return id;
-  }
-
   @override
   Future<Question> getRandomQuestion(String filter) async {
     // return questionsCollection.snapshots().map((snapshot) =>
     //     snapshot.docs.map((question) => question.data()).toList());
 
     CollectionReference myRef = questionsCollection;
-    String _randomIndex = getRandomGeneratedId();
+    AggregateQuery aggregateQuery =
+        await questionsCollection.where("lesson", isEqualTo: filter).count();
+    int count = (await aggregateQuery.get()).count;
+    if(count > 0){
+    int _randomIndex = Random().nextInt(count);
     print(_randomIndex);
-    // QuerySnapshot querySnapshot = await _firestore
-    //     .collection("questions")
-    //     .where('id', isGreaterThanOrEqualTo: _randomIndex).limit(1)
-    //     .get();
 
-    // final question = querySnapshot.docs[0].data().toString();
-    // print("hello");
-    // print(question);
-    // final question1 = querySnapshot.docs[0].data() as Question;
+    final Question question =
+        (await questionsCollection.where("lesson", isEqualTo: filter).get())
+            .docs[_randomIndex].data() ;
+    return question;
+    }
 
-    // return question1;
 
-    return await questionsCollection
-        .where('lesson')
-        .snapshots()
-        .first
-        .then((snapshot) {
-      int randomIndex = Random().nextInt(snapshot.docs.length);
-      final element = snapshot.docs[randomIndex].data();
-      print(element.toString());
-      return element;
-    });
+    return Question(questionContent: "", answer: "", lesson: "", subject: "");
+
+    // return await questionsCollection
+    //     .where('lesson', isEqualTo: filter)
+    //     .snapshots()
+    //     .first
+    //     .then((snapshot) {
+    //   int randomIndex = Random().nextInt(snapshot.docs.length);
+    //   final element = snapshot.docs[randomIndex].data();
+    //   print(element.toString());
+    //   return element;
+    // });
   }
 
   @override

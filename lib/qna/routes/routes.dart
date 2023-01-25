@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hg_sips/qna/qna.dart';
+import 'package:toghraphy/qna/qna.dart';
 
 List<Page> onGenerateFlowPages(
     QnaPageStatus status, List<Page<dynamic>> pages) {

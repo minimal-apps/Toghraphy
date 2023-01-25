@@ -1,9 +1,13 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hg_sips/qna/qna.dart';
-import 'package:hg_sips/themes/theme.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:toghraphy/qna/qna.dart';
+import 'package:toghraphy/themes/theme.dart';
 import 'package:questions_repository/questions_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,8 +21,50 @@ class QuestionsPage extends StatelessWidget {
   }
 }
 
-class QuestionsView extends StatelessWidget {
+class QuestionsView extends StatefulWidget {
   const QuestionsView({super.key});
+
+  @override
+  State<QuestionsView> createState() => _QuestionsViewState();
+}
+
+class _QuestionsViewState extends State<QuestionsView> {
+  AdWidget? adWidget;
+  final myBanner = BannerAd(
+    adUnitId: 'ca-app-pub-9274006447661564/1672608508',
+    size: AdSize.banner,
+    request: const AdRequest(),
+    listener: BannerAdListener(
+      onAdLoaded: (Ad ad) => print('Ad loaded.'),
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        ad.dispose();
+        print('Ad failed to load: $error');
+      },
+      onAdOpened: (Ad ad) => print('Ad opened.'),
+      onAdClosed: (Ad ad) => print('Ad closed.'),
+      onAdImpression: (Ad ad) => print('Ad impression.'),
+    ),
+  );
+  @override
+  void initState() {
+    super.initState();
+    showAd();
+  }
+
+  Future<void> showAd() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      await myBanner.load().onError((error, stackTrace) {
+        adWidget = null;
+        return;
+      });
+
+      setState(() {
+        adWidget = AdWidget(ad: myBanner);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +94,13 @@ class QuestionsView extends StatelessWidget {
                       children: [
                         QuestionSection(themeState: themeState),
                         TextFieldSection(themeState: themeState),
-                        ButtonsSection(themeState: themeState)
+                        ButtonsSection(themeState: themeState),
+                        Container(
+                          alignment: Alignment.center,
+                          width: adWidget !=null ? myBanner.size.width.toDouble() : 0,
+                          height: adWidget !=null ? myBanner.size.height.toDouble() : 0,
+                          child: adWidget,
+                        )
                       ],
                     ),
                   ),
@@ -222,7 +274,6 @@ class DropDownAppBar extends StatefulWidget {
 
 class _DropDownAppBarState extends State<DropDownAppBar> {
   List<String> historyLessons = [
-    'التحولات الكبرى للعالم الرأسمالي وانعكاساتها خلال القرن 19م ومطلع القرن 20م',
     'التحولات الاقتصادية والمالية والاجتماعية والفكرية في العالم في القرن 19م',
     'التنافس الإمبريالي واندلاع الحرب العالمية الأولى',
     'اليقظة الفكرية بالمشرق العربي',
@@ -231,7 +282,6 @@ class _DropDownAppBarState extends State<DropDownAppBar> {
     'الحرب العالمية الثانية (الأسباب والنتائج)',
     'نظام الحماية بالمغرب والاستغلال الاستعماري',
     'نضال المغرب من أجل تحقيق الاستقلال واستكمال الوحدة الترابية',
-    'العولمة والتحديات الراهنة',
   ];
   List<String> geographyLessons = [
     'مفهوم التنمية، تعدد المقاربات، التقسيمات الكبرى للعالم (خريطة التنمية)',
@@ -259,15 +309,12 @@ class _DropDownAppBarState extends State<DropDownAppBar> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       userName = prefs.getString('name')!;
-      
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final qnaState = context.watch<QnaBloc>().state;
-    
-      
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -312,24 +359,36 @@ class _DropDownAppBarState extends State<DropDownAppBar> {
                   onChanged: (v) {
                     setState(() {
                       mainDropDown = v;
+                      if (v == "التاريخ") {
+                        context.read<QnaBloc>().add(QnaFilterChanged(
+                            filterLesson: historyLessons[0],
+                            filterSubject: 'التاريخ'));
+                      } else {
+                        context.read<QnaBloc>().add(QnaFilterChanged(
+                            filterLesson: geographyLessons[0],
+                            filterSubject: 'الجغرافيا'));
+                      }
                     });
                   },
                   items: const ["التاريخ", "الجغرافيا"],
                 ),
               ),
               if (mainDropDown == "التاريخ")
-                CustomDropDown(
+                CustomDropDownBottom(
                   key: UniqueKey(),
-                  onChanged: (v) {
-                    context.read<QnaBloc>().add(QnaFilterChanged(filter: v));
+                  onChanged: (lesson) {
+                    context.read<QnaBloc>().add(QnaFilterChanged(
+                        filterLesson: lesson!, filterSubject: 'التاريخ'));
                   },
                   items: historyLessons,
                 )
               else
-                CustomDropDown(
+                CustomDropDownBottom(
                   key: UniqueKey(),
-                  onChanged: (v) {
-                    context.read<QnaBloc>().add(QnaFilterChanged(filter: v));
+                  onChanged: (lesson) {
+                    print("heeey");
+                    context.read<QnaBloc>().add(QnaFilterChanged(
+                        filterLesson: lesson!, filterSubject: "الجغرافيا"));
                   },
                   items: geographyLessons,
                 )

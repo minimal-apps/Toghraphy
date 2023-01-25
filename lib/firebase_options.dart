@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCjxbjzjwjbGcpSuzXf4lUBAXqIuC0mnZ0',
-    appId: '1:106181398821:android:2e26e90d3546da908acacc',
+    appId: '1:106181398821:android:eaa3d3a07c5b27098acacc',
     messagingSenderId: '106181398821',
     projectId: 'hg-sip',
     storageBucket: 'hg-sip.appspot.com',
@@ -66,11 +66,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDKi3VHPzYows9P0JrHISm7R10t5XWg2Lc',
-    appId: '1:106181398821:ios:03e7b8b8751ef1608acacc',
+    appId: '1:106181398821:ios:d3dc17745784a7408acacc',
     messagingSenderId: '106181398821',
     projectId: 'hg-sip',
     storageBucket: 'hg-sip.appspot.com',
-    iosClientId: '106181398821-d9sflktige4dpune1vh3kikp9sj6meu3.apps.googleusercontent.com',
-    iosBundleId: 'com.example.verygoodcore.hg-sips',
+    iosClientId: '106181398821-r9hvihupns0vpue535odstbrggb2r42p.apps.googleusercontent.com',
+    iosBundleId: 'tech.minimal-apps.toghraphy',
   );
 }

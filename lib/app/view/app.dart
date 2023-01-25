@@ -1,7 +1,7 @@
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hg_sips/app/app.dart';
+import 'package:toghraphy/app/app.dart';
 import 'package:questions_repository/questions_repository.dart';
 
 import '../../themes/theme.dart';
@@ -31,7 +31,6 @@ class App extends StatelessWidget {
     );
   }
 }
-
 
 class AppView extends StatelessWidget {
   const AppView({

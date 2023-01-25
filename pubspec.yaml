@@ -1,4 +1,4 @@
-name: hg_sips
+name: toghraphy
 description: A Very Good Project created by Very Good CLI.
 version: 1.0.0+1
 publish_to: none
@@ -30,12 +30,20 @@ dependencies:
   hydrated_bloc: ^9.0.0
   path_provider: ^2.0.11
   shared_preferences: ^2.0.15
+  flutter_launcher_icons: ^0.11.0
+  google_mobile_ads: ^2.3.0
+  connectivity_plus: ^3.0.2
 dev_dependencies:
   bloc_test: ^9.1.0
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0
   very_good_analysis: ^3.1.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/bg_logo.png" 
 
 flutter:
   assets:

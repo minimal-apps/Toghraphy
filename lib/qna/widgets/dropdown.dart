@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:hg_sips/themes/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toghraphy/qna/bloc/qna_bloc.dart';
+
+import 'package:toghraphy/themes/theme.dart';
+import 'package:toghraphy/themes/bloc/theme_bloc.dart';
 
 class CustomDropDown extends StatefulWidget {
   CustomDropDown({super.key, required this.items, required this.onChanged});
@@ -25,7 +25,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
       decoration: BoxDecoration(
           color: themeState.primaryColor,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(13),
           border: Border.all(color: themeState.secondaryColor)),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
@@ -60,6 +60,62 @@ class _CustomDropDownState extends State<CustomDropDown> {
             });
             widget.onChanged(currentValue);
           },
+        ),
+      ),
+    );
+  }
+}
+
+class CustomDropDownBottom extends StatefulWidget {
+  CustomDropDownBottom(
+      {super.key, required this.items, required this.onChanged});
+  final void Function(String?) onChanged;
+  List<String> items;
+
+  @override
+  State<CustomDropDownBottom> createState() => _CustomDropDownBottomState();
+}
+
+class _CustomDropDownBottomState extends State<CustomDropDownBottom> {
+  late String currentValue = widget.items[0];
+
+  @override
+  Widget build(BuildContext context) {
+    final themeState = context.watch<ThemeBloc>().state;
+    final qnaState = context.watch<QnaBloc>().state;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+      decoration: BoxDecoration(
+          color: themeState.primaryColor,
+          borderRadius: BorderRadius.circular(13),
+          border: Border.all(color: themeState.secondaryColor)),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton(
+          icon: Icon(
+            Icons.expand_more,
+            color: themeState.secondaryColor,
+          ),
+          dropdownColor: themeState.primaryColor,
+          isExpanded: true,
+          elevation: 0,
+          value: qnaState.filterLesson,
+          items: widget.items
+              .map(
+                (e) => DropdownMenuItem<String>(
+                  key: UniqueKey(),
+                  child: Text(
+                    e,
+                    style: TextStyle(
+                      color: themeState.secondaryColor,
+                      fontSize: 13,
+                    ),
+                  ),
+                  value: e,
+                ),
+              )
+              .toList(),
+          onChanged: widget.onChanged,
         ),
       ),
     );

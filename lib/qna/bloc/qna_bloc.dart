@@ -29,8 +29,9 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     QnaQuestionRequested event,
     Emitter<QnaState> emit,
   ) async {
-    print(state.filter);
-    final question = await _questionsRepository.getRandomQuestion(state.filter);
+    print(state.filterLesson);
+    final question =
+        await _questionsRepository.getRandomQuestion(state.filterLesson);
     emit(state.copyWith(question: question));
   }
 
@@ -38,7 +39,8 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     QnaFilterChanged event,
     Emitter<QnaState> emit,
   ) async {
-    emit(state.copyWith(filter: event.filter));
+    emit(state.copyWith(
+        filterLesson: event.filterLesson, filterSubject: event.filterSubject));
   }
 
   Future<void> _onQnaAnswerChanged(

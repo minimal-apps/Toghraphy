@@ -10,10 +10,11 @@ class QnaQuestionRequested extends QnaEvent {
 }
 
 class QnaFilterChanged extends QnaEvent {
-  QnaFilterChanged({required this.filter});
-  final String filter;
+  QnaFilterChanged({required this.filterLesson,required this.filterSubject});
+  final String filterLesson;
+  final String filterSubject;
   @override
-  List<Object> get props => [filter];
+  List<Object> get props => [filterLesson,filterSubject];
 }
 
 class QnaAnswerChanged extends QnaEvent {

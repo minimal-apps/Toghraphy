@@ -1,7 +1,7 @@
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hg_sips/themes/theme.dart';
+import 'package:toghraphy/themes/theme.dart';
 
 class ColorPicker extends StatelessWidget {
   ColorPicker({

@@ -6,8 +6,8 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hg_sips/app/app.dart';
-import 'package:hg_sips/counter/counter.dart';
+import 'package:toghraphy/app/app.dart';
+import 'package:toghraphy/counter/counter.dart';
 
 void main() {
   group('App', () {

@@ -1,9 +1,11 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hg_sips/app/app.dart';
-import 'package:hg_sips/qna/qna.dart';
-import 'package:hg_sips/themes/theme.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:toghraphy/app/app.dart';
+import 'package:toghraphy/qna/qna.dart';
+import 'package:toghraphy/themes/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AnswerPage extends StatelessWidget {
@@ -17,8 +19,50 @@ class AnswerPage extends StatelessWidget {
   }
 }
 
-class AnswerView extends StatelessWidget {
+class AnswerView extends StatefulWidget {
   const AnswerView({super.key});
+
+  @override
+  State<AnswerView> createState() => _AnswerViewState();
+}
+
+class _AnswerViewState extends State<AnswerView> {
+  AdWidget? adWidget;
+  final myBanner = BannerAd(
+    adUnitId: 'ca-app-pub-9274006447661564/1672608508',
+    size: AdSize.banner,
+    request: const AdRequest(),
+    listener: BannerAdListener(
+      onAdLoaded: (Ad ad) => print('Ad loaded.'),
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        ad.dispose();
+        print('Ad failed to load: $error');
+      },
+      onAdOpened: (Ad ad) => print('Ad opened.'),
+      onAdClosed: (Ad ad) => print('Ad closed.'),
+      onAdImpression: (Ad ad) => print('Ad impression.'),
+    ),
+  );
+  @override
+  void initState() {
+    super.initState();
+    showAd();
+  }
+
+  Future<void> showAd() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      await myBanner.load().onError((error, stackTrace) {
+        adWidget = null;
+        return;
+      });
+
+      setState(() {
+        adWidget = AdWidget(ad: myBanner);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +98,9 @@ class AnswerView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Text(
-                            qnaState.question!.answer,
+                            qnaState.question == null
+                                ? ""
+                                : qnaState.question!.answer,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 25,
@@ -140,6 +186,14 @@ class AnswerView extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Container(
+                    alignment: Alignment.center,
+                    width:
+                        adWidget != null ? myBanner.size.width.toDouble() : 0,
+                    height:
+                        adWidget != null ? myBanner.size.height.toDouble() : 0,
+                    child: adWidget,
+                  )
                 ],
               ),
             ),
