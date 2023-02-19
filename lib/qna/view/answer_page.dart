@@ -69,111 +69,95 @@ class _AnswerViewState extends State<AnswerView> {
     final themeState = context.watch<ThemeBloc>().state;
     final qnaState = context.watch<QnaBloc>().state;
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: themeState.backgroundColor,
-        body: Stack(children: [
-          SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20, top: 20),
-                    child: Column(
-                      children: [
-                        Text(
-                          "الجواب الصحيح",
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
-                              color: themeState.secondaryColor),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                            color: themeState.bubbleColor,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Text(
-                            qnaState.question == null
-                                ? ""
-                                : qnaState.question!.answer,
-                            textAlign: TextAlign.center,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: themeState.backgroundColor,
+          body: Stack(children: [
+            SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20, top: 20),
+                      child: Column(
+                        children: [
+                          Text(
+                            "الجواب الصحيح",
                             style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
-                              color: themeState.primaryColor,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
+                                color: themeState.secondaryColor),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            width: double.maxFinite,
+                            decoration: BoxDecoration(
+                              color: themeState.bubbleColor,
+                              borderRadius: BorderRadius.circular(16),
                             ),
-                          ),
-                        )
-                      ],
+                            child: Text(
+                              qnaState.question == null
+                                  ? ""
+                                  : qnaState.question!.answer,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
+                                color: themeState.primaryColor,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20, top: 10),
-                    child: Column(
-                      children: [
-                        Text(
-                          "جوابك",
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
-                              color: themeState.secondaryColor),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                            color: themeState.bubbleColor,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Text(
-                            context.watch<QnaBloc>().state.userAnswer ?? '',
-                            textAlign: TextAlign.center,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20, top: 10),
+                      child: Column(
+                        children: [
+                          Text(
+                            "جوابك",
                             style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
-                              color: themeState.primaryColor,
-                            ),
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
+                                color: themeState.secondaryColor),
                           ),
-                        )
-                      ],
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            width: double.maxFinite,
+                            decoration: BoxDecoration(
+                              color: themeState.bubbleColor,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Text(
+                              context.watch<QnaBloc>().state.userAnswer ?? '',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
+                                color: themeState.primaryColor,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SimpleButton(
-                          icon: Icons.check,
-                          text: 'جوابك صحيح',
-                          color: themeState.primaryColor,
-                          onPressed: () async {
-                            final prefs = await SharedPreferences.getInstance();
-                            final newScore = prefs.getInt('score')! + 5;
-                            await prefs.setInt('score', newScore);
-                            context.read<QnaBloc>()
-                              ..add(QnaScoreChanged(score: newScore))
-                              ..add(
-                                QnaNavigationTriggered(
-                                  status: QnaPageStatus.questionPage,
-                                ),
-                              );
-                          },
-                        ),
-                        SimpleButton(
-                            icon: Icons.close,
-                            text: "جوابك غير صحيح",
-                            color: themeState.secondaryColor,
-                            background: themeState.primaryColor,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SimpleButton(
+                            icon: Icons.check,
+                            text: 'جوابك صحيح',
+                            color: themeState.primaryColor,
                             onPressed: () async {
                               final prefs =
                                   await SharedPreferences.getInstance();
-                              final newScore = prefs.getInt('score')! - 5;
+                              final newScore = prefs.getInt('score')! + 5;
                               await prefs.setInt('score', newScore);
                               context.read<QnaBloc>()
                                 ..add(QnaScoreChanged(score: newScore))
@@ -182,42 +166,63 @@ class _AnswerViewState extends State<AnswerView> {
                                     status: QnaPageStatus.questionPage,
                                   ),
                                 );
-                            })
-                      ],
+                            },
+                          ),
+                          SimpleButton(
+                              icon: Icons.close,
+                              text: "جوابك غير صحيح",
+                              color: themeState.secondaryColor,
+                              background: themeState.primaryColor,
+                              onPressed: () async {
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                final newScore = prefs.getInt('score')! - 5;
+                                await prefs.setInt('score', newScore);
+                                context.read<QnaBloc>()
+                                  ..add(QnaScoreChanged(score: newScore))
+                                  ..add(
+                                    QnaNavigationTriggered(
+                                      status: QnaPageStatus.questionPage,
+                                    ),
+                                  );
+                              })
+                        ],
+                      ),
                     ),
+                    Container(
+                      alignment: Alignment.center,
+                      width:
+                          adWidget != null ? myBanner.size.width.toDouble() : 0,
+                      height: adWidget != null
+                          ? myBanner.size.height.toDouble()
+                          : 0,
+                      child: adWidget,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: themeState.secondaryColor,
+                    shape: const CircleBorder(),
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    width:
-                        adWidget != null ? myBanner.size.width.toDouble() : 0,
-                    height:
-                        adWidget != null ? myBanner.size.height.toDouble() : 0,
-                    child: adWidget,
-                  )
-                ],
+                  child: Icon(
+                    Icons.close,
+                    color: themeState.primaryColor,
+                  ),
+                  onPressed: () {
+                    context.read<QnaBloc>().add(QnaNavigationTriggered(
+                        status: QnaPageStatus.questionPage));
+                  },
+                ),
               ),
             ),
-          ),
-          Positioned(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: themeState.secondaryColor,
-                  shape: const CircleBorder(),
-                ),
-                child: Icon(
-                  Icons.close,
-                  color: themeState.primaryColor,
-                ),
-                onPressed: () {
-                  context.read<QnaBloc>().add(QnaNavigationTriggered(
-                      status: QnaPageStatus.questionPage));
-                },
-              ),
-            ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }

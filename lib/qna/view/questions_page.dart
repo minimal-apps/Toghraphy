@@ -66,6 +66,8 @@ class _QuestionsViewState extends State<QuestionsView> {
     }
   }
 
+  final TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final themeState = context.watch<ThemeBloc>().state;
@@ -93,12 +95,22 @@ class _QuestionsViewState extends State<QuestionsView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         QuestionSection(themeState: themeState),
-                        TextFieldSection(themeState: themeState),
-                        ButtonsSection(themeState: themeState),
+                        TextFieldSection(
+                          themeState: themeState,
+                          controller: controller,
+                        ),
+                        ButtonsSection(
+                          themeState: themeState,
+                          onNextQuestion: controller.clear,
+                        ),
                         Container(
                           alignment: Alignment.center,
-                          width: adWidget !=null ? myBanner.size.width.toDouble() : 0,
-                          height: adWidget !=null ? myBanner.size.height.toDouble() : 0,
+                          width: adWidget != null
+                              ? myBanner.size.width.toDouble()
+                              : 0,
+                          height: adWidget != null
+                              ? myBanner.size.height.toDouble()
+                              : 0,
                           child: adWidget,
                         )
                       ],
@@ -114,14 +126,21 @@ class _QuestionsViewState extends State<QuestionsView> {
   }
 }
 
-class ButtonsSection extends StatelessWidget {
+class ButtonsSection extends StatefulWidget {
   const ButtonsSection({
     Key? key,
     required this.themeState,
+    required this.onNextQuestion,
   }) : super(key: key);
 
   final ThemeState themeState;
+  final VoidCallback onNextQuestion;
 
+  @override
+  State<ButtonsSection> createState() => _ButtonsSectionState();
+}
+
+class _ButtonsSectionState extends State<ButtonsSection> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -131,7 +150,7 @@ class ButtonsSection extends StatelessWidget {
           children: [
             SimpleButton(
                 text: "قارن جوابك بالجواب الصحيح",
-                color: themeState.primaryColor,
+                color: widget.themeState.primaryColor,
                 onPressed: () {
                   context.read<QnaBloc>().add(
                         QnaNavigationTriggered(
@@ -142,11 +161,16 @@ class ButtonsSection extends StatelessWidget {
             SimpleButton(
                 icon: Icons.arrow_forward_ios,
                 text: "السؤال الموالي ",
-                color: themeState.primaryColor,
+                color: widget.themeState.primaryColor,
                 onPressed: () {
-                  context.read<QnaBloc>().add(
-                        QnaQuestionRequested(),
-                      );
+                  context.read<QnaBloc>()
+                    ..add(
+                      QnaQuestionRequested(),
+                    )
+                    ..add(QnaAnswerChanged(text: ""));
+                  setState(() {
+                    widget.onNextQuestion();
+                  });
                 })
           ],
         ),
@@ -155,14 +179,20 @@ class ButtonsSection extends StatelessWidget {
   }
 }
 
-class TextFieldSection extends StatelessWidget {
+class TextFieldSection extends StatefulWidget {
   const TextFieldSection({
     Key? key,
+    required this.controller,
     required this.themeState,
   }) : super(key: key);
-
+  final TextEditingController controller;
   final ThemeState themeState;
 
+  @override
+  State<TextFieldSection> createState() => _TextFieldSectionState();
+}
+
+class _TextFieldSectionState extends State<TextFieldSection> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -172,34 +202,35 @@ class TextFieldSection extends StatelessWidget {
           style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.w700,
-              color: themeState.secondaryColor),
+              color: widget.themeState.secondaryColor),
         ),
         TextField(
+          controller: widget.controller,
           onChanged: (text) {
             context.read<QnaBloc>().add(QnaAnswerChanged(text: text));
           },
-          style: TextStyle(color: themeState.primaryColor),
-          cursorColor: themeState.primaryColor,
+          style: TextStyle(color: widget.themeState.primaryColor),
+          cursorColor: widget.themeState.primaryColor,
           decoration: InputDecoration(
             filled: true,
-            fillColor: themeState.bubbleColor,
+            fillColor: widget.themeState.bubbleColor,
             contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 10),
             counterStyle: Theme.of(context).textTheme.headline6,
-            hintStyle: Theme.of(context)
-                .textTheme
-                .subtitle1!
-                .copyWith(color: themeState.primaryColor.withOpacity(0.4)),
+            hintStyle: Theme.of(context).textTheme.subtitle1!.copyWith(
+                color: widget.themeState.primaryColor.withOpacity(0.4)),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: themeState.bubbleColor, width: 2.0),
+              borderSide:
+                  BorderSide(color: widget.themeState.bubbleColor, width: 2.0),
               borderRadius: BorderRadius.circular(16),
             ),
             labelStyle: Theme.of(context)
                 .textTheme
                 .headline6!
-                .copyWith(fontSize: 16, color: themeState.primaryColor),
+                .copyWith(fontSize: 16, color: widget.themeState.primaryColor),
             hintText: "اكتب جوابك ...",
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: themeState.bubbleColor, width: 2.0),
+              borderSide:
+                  BorderSide(color: widget.themeState.bubbleColor, width: 2.0),
               borderRadius: BorderRadius.circular(16),
             ),
           ),

@@ -29,7 +29,6 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     QnaQuestionRequested event,
     Emitter<QnaState> emit,
   ) async {
-    print(state.filterLesson);
     final question =
         await _questionsRepository.getRandomQuestion(state.filterLesson);
     emit(state.copyWith(question: question));
@@ -41,6 +40,9 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
   ) async {
     emit(state.copyWith(
         filterLesson: event.filterLesson, filterSubject: event.filterSubject));
+    final question =
+        await _questionsRepository.getRandomQuestion(state.filterLesson);
+    emit(state.copyWith(question: question));
   }
 
   Future<void> _onQnaAnswerChanged(
@@ -57,7 +59,7 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     if (event.score == 0) {
       final prefs = await SharedPreferences.getInstance();
       prefs.getInt('score') ?? prefs.setInt('score', 0);
-      emit(state.copyWith(score: prefs.getInt('score')!));
+      emit(state.copyWith(score: prefs.getInt('score')));
     } else {
       emit(state.copyWith(score: event.score));
     }
