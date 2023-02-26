@@ -41,7 +41,13 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Tajawal'),
+      theme: ThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
+          selectionHandleColor: Colors.transparent,
+        ),
+        fontFamily: 'Tajawal',
+        useMaterial3: true,
+      ),
       home: FlowBuilder<PageStatus>(
           state: context.watch<AppBloc>().state.status,
           onGeneratePages: onGeneratePages),

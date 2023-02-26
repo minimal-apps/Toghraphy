@@ -4,6 +4,7 @@ import 'package:toghraphy/app/view/authentication.dart';
 import 'package:toghraphy/qna/qna.dart';
 
 List<Page> onGeneratePages(PageStatus status, List<Page<dynamic>> pages) {
-  if (PageStatus.authenticated == status) return [QnaFlow.page()];
-  return [Authentication.page()];
+  // if (PageStatus.authenticated == status)
+  return [QnaFlow.page()];
+  // return [Authentication.page()];
 }

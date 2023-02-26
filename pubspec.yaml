@@ -4,7 +4,7 @@ version: 1.0.0+2
 publish_to: none
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=2.18.0 <=3.7.5"
   flutter: 3.3.3
 
 dependencies:
@@ -16,7 +16,7 @@ dependencies:
   flutter_bloc: ^8.1.1
   flutter_localizations:
     sdk: flutter
-  intl: ^0.17.0
+  intl: ^ 0.18.0
   questions_api:
     path: packages/questions_api
   questions_repository:
@@ -33,6 +33,8 @@ dependencies:
   flutter_launcher_icons: ^0.11.0
   google_mobile_ads: ^2.3.0
   connectivity_plus: ^3.0.2
+  firebase_analytics: ^10.1.4
+  speech_to_text: ^6.1.1
 dev_dependencies:
   bloc_test: ^9.1.0
   flutter_test:

@@ -43,6 +43,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
               .map(
                 (e) => DropdownMenuItem<String>(
                   key: UniqueKey(),
+                  value: e,
                   child: Text(
                     e,
                     style: TextStyle(
@@ -50,7 +51,6 @@ class _CustomDropDownState extends State<CustomDropDown> {
                       fontSize: 13,
                     ),
                   ),
-                  value: e,
                 ),
               )
               .toList(),

@@ -16,7 +16,7 @@ void main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
-  MobileAds.instance.initialize();
+  await MobileAds.instance.initialize();
   
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

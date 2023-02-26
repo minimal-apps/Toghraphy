@@ -5,9 +5,10 @@
     "version": "0.2.0",
     "configurations": [
             {
-                    "name": "hg_sips_mobile production",
+                    "name": "toghraphy production",
                     "program": "lib/main_production.dart",
                     "request": "launch",
+                    "flutterMode": "profile",
                     "type": "dart",
                     "args": [
                             "--flavor",
