@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
-import 'package:uuid/uuid.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 part 'question.g.dart';
 
@@ -12,6 +13,8 @@ class Question extends Equatable {
   final String answer;
   final String lesson;
   final String subject;
+  final List<String> choices;
+  final int correctChoiceIndex;
 
   Question({
     String? id,
@@ -19,6 +22,8 @@ class Question extends Equatable {
     required this.answer,
     required this.lesson,
     required this.subject,
+    required this.choices,
+    required this.correctChoiceIndex
   }) : id = id ?? const Uuid().v4();
 
   @override
@@ -28,6 +33,8 @@ class Question extends Equatable {
         answer,
         lesson,
         subject,
+        choices,
+        correctChoiceIndex
       ];
 
   Question copyWith({
@@ -36,6 +43,8 @@ class Question extends Equatable {
     String? answer,
     String? lesson,
     String? subject,
+    List<String>? choices,
+    int? correctChoiceIndex,
   }) {
     return Question(
       id: id ?? this.id,
@@ -43,10 +52,12 @@ class Question extends Equatable {
       answer: answer ?? this.answer,
       lesson: lesson ?? this.lesson,
       subject: subject ?? this.subject,
+      choices: choices ?? this.choices,
+      correctChoiceIndex: correctChoiceIndex ?? this.correctChoiceIndex,
     );
   }
 
-  factory Question.fromJson(Map<String, dynamic> json) =>
+    factory Question.fromJson(Map<String, dynamic> json) =>
       _$QuestionFromJson(json);
 
   Map<String, dynamic> toJson() => _$QuestionToJson(this);
@@ -54,3 +65,4 @@ class Question extends Equatable {
   @override
   bool get stringify => true;
 }
+

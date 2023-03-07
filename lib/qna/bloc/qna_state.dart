@@ -13,7 +13,6 @@ class QnaState extends Equatable {
   final String filterLesson;
   final String filterSubject;
   final String? userAnswer;
-  final String? userQuestion;
   final QnaPageStatus? status;
 
   const QnaState({
@@ -24,7 +23,6 @@ class QnaState extends Equatable {
     this.score,
     this.questions,
     this.userAnswer,
-    this.userQuestion,
     this.status = QnaPageStatus.questionPage,
   });
 
@@ -37,7 +35,6 @@ class QnaState extends Equatable {
         filterLesson,
         filterSubject,
         userAnswer,
-        userQuestion
       ];
 
   QnaState copyWith({
@@ -47,7 +44,6 @@ class QnaState extends Equatable {
     String? filterLesson,
     String? filterSubject,
     String? userAnswer,
-    String? userQuestion,
     QnaPageStatus? status,
   }) {
     return QnaState(
@@ -57,7 +53,6 @@ class QnaState extends Equatable {
       filterLesson: filterLesson ?? this.filterLesson,
       filterSubject: filterSubject ?? this.filterSubject,
       userAnswer: userAnswer ?? this.userAnswer,
-      userQuestion: userQuestion ?? this.userQuestion,
       status: status ?? this.status,
     );
   }

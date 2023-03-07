@@ -29,9 +29,19 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     QnaQuestionRequested event,
     Emitter<QnaState> emit,
   ) async {
-    final question =
-        await _questionsRepository.getRandomQuestion(state.filterLesson);
-    emit(state.copyWith(question: question));
+    // final question =
+    //     await _questionsRepository.getRandomQuestion(state.filterLesson);
+    // TODO(redApple): uncomment
+    // emit(state.copyWith(question: question));
+    emit(state.copyWith(
+        question: Question(
+            questionContent: "text",
+            answer: "text",
+            lesson: "text",
+            subject: "text",
+            choices: ["choice 1", "choice 2", "choice 3"],
+            correctChoiceIndex: 0)));
+    print(state.question!.questionContent);
   }
 
   Future<void> _onQnaFilterChanged(

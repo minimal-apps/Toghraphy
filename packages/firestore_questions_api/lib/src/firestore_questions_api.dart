@@ -50,7 +50,7 @@ class FirestoreQuestionsAPI implements QuestionsAPI {
     }
 
 
-    return Question(questionContent: "", answer: "", lesson: "", subject: "");
+    return Question(questionContent: "", answer: "", lesson: "", subject: "",choices: [],correctChoiceIndex: 0);
 
     // return await questionsCollection
     //     .where('lesson', isEqualTo: filter)
