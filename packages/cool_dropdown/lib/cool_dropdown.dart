@@ -217,7 +217,7 @@ class _CoolDropdownState extends State<CoolDropdown>
       widget.onOpen!(isOpen);
     }
     this._overlayEntry = this._createOverlayEntry();
-    Overlay.of(inputKey.currentContext!)!.insert(this._overlayEntry);
+    Overlay.of(inputKey.currentContext!).insert(this._overlayEntry);
     rotationController.forward();
   }
 

@@ -1,10 +1,9 @@
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:toghraphy/app/app.dart';
 import 'package:questions_repository/questions_repository.dart';
-
-import '../../themes/theme.dart';
+import 'package:toghraphy/app/app.dart';
+import 'package:toghraphy/themes/theme.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -50,7 +49,7 @@ class AppView extends StatelessWidget {
       ),
       home: FlowBuilder<PageStatus>(
           state: context.watch<AppBloc>().state.status,
-          onGeneratePages: onGeneratePages),
+          onGeneratePages: onGeneratePages,),
     );
   }
 }

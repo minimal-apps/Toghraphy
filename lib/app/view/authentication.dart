@@ -1,19 +1,18 @@
-import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toghraphy/app/app.dart';
 import 'package:toghraphy/app/widgets/widgets.dart';
 import 'package:toghraphy/qna/animation/animation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Authentication extends StatelessWidget {
   Authentication({
     super.key,
   });
   static Page page() => SlidingPage(
-      child: Authentication(), key: const ValueKey('authentication'));
+      child: Authentication(), key: const ValueKey('authentication'),);
 
-  String name = "";
+  String name = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,14 +25,14 @@ class Authentication extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: Image.asset(
-                    "assets/logo.png",
+                    'assets/logo.png',
                     width: 250,
                   ),
                 ),
                 const Text(
-                  "التطبيق الأول من نوعه لتسهيل حفظ التاريخ و الجغرافيا على طلاب الأولى باكلوريا",
+                  'التطبيق الأول من نوعه لتسهيل حفظ التاريخ و الجغرافيا على طلاب الأولى باكلوريا',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                 )
               ],
@@ -47,15 +46,15 @@ class Authentication extends StatelessWidget {
             SizedBox(
                 width: double.maxFinite,
                 child: SubmitButton(
-                    text: "ابدأ",
+                    text: 'ابدأ',
                     color: Colors.white,
                     onPressed: () async {
                       if (name.isNotEmpty) {
                         final prefs = await SharedPreferences.getInstance();
-                        prefs.setString("name", name);
+                        await prefs.setString('name', name);
                         context.read<AppBloc>().add(AppOpened());
                       }
-                    }))
+                    },),)
           ],
         ),
       ),

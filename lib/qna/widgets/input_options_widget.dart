@@ -56,7 +56,7 @@ class _InputOptionsWidgetState extends State<InputOptionsWidget> {
                 ),
                 borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(16),
-                    bottomRight: Radius.circular(16)),
+                    bottomRight: Radius.circular(16),),
               ),
               child: Text(
                 'صوتي',
@@ -66,7 +66,7 @@ class _InputOptionsWidgetState extends State<InputOptionsWidget> {
                         ? widget.themeState.secondaryColor.withOpacity(0.5)
                         : widget.themeState.secondaryColor,
                     fontSize: 15,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold,),
               ),
             ),
           ),
@@ -85,7 +85,7 @@ class _InputOptionsWidgetState extends State<InputOptionsWidget> {
               decoration: BoxDecoration(
                 color: widget.themeState.primaryColor,
                 border: Border.all(
-                    color: widget.themeState.secondaryColor, width: 2),
+                    color: widget.themeState.secondaryColor, width: 2,),
               ),
               child: Text(
                 'مكتوب',
@@ -95,7 +95,7 @@ class _InputOptionsWidgetState extends State<InputOptionsWidget> {
                         ? widget.themeState.secondaryColor.withOpacity(0.5)
                         : widget.themeState.secondaryColor,
                     fontSize: 15,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold,),
               ),
             ),
           ),
@@ -114,10 +114,10 @@ class _InputOptionsWidgetState extends State<InputOptionsWidget> {
               decoration: BoxDecoration(
                 color: widget.themeState.primaryColor,
                 border: Border.all(
-                    color: widget.themeState.secondaryColor, width: 2),
+                    color: widget.themeState.secondaryColor, width: 2,),
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(16),
-                    bottomLeft: Radius.circular(16)),
+                    bottomLeft: Radius.circular(16),),
               ),
               child: Text(
                 'اختيارات',

@@ -60,31 +60,31 @@ class _DropDownAppBarState extends State<DropDownAppBar> {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.only(bottom: 8),
                 child: CustomDropDown(
                   onChanged: (v) {
                     setState(() {
                       mainDropDown = v;
-                      if (v == "التاريخ") {
+                      if (v == 'التاريخ') {
                         context.read<QnaBloc>().add(QnaFilterChanged(
                             filterLesson: historyLessons[0],
-                            filterSubject: 'التاريخ'));
+                            filterSubject: 'التاريخ',),);
                       } else {
                         context.read<QnaBloc>().add(QnaFilterChanged(
                             filterLesson: geographyLessons[0],
-                            filterSubject: 'الجغرافيا'));
+                            filterSubject: 'الجغرافيا',),);
                       }
                     });
                   },
-                  items: const ["التاريخ", "الجغرافيا"],
+                  items: const ['التاريخ', 'الجغرافيا'],
                 ),
               ),
-              if (mainDropDown == "التاريخ")
+              if (mainDropDown == 'التاريخ')
                 CustomDropDownBottom(
                   key: UniqueKey(),
                   onChanged: (lesson) {
                     context.read<QnaBloc>().add(QnaFilterChanged(
-                        filterLesson: lesson!, filterSubject: 'التاريخ'));
+                        filterLesson: lesson!, filterSubject: 'التاريخ',),);
                   },
                   items: historyLessons,
                 )
@@ -93,7 +93,7 @@ class _DropDownAppBarState extends State<DropDownAppBar> {
                   key: UniqueKey(),
                   onChanged: (lesson) {
                     context.read<QnaBloc>().add(QnaFilterChanged(
-                        filterLesson: lesson!, filterSubject: "الجغرافيا"));
+                        filterLesson: lesson!, filterSubject: 'الجغرافيا',),);
                   },
                   items: geographyLessons,
                 )

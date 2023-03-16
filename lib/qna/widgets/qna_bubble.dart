@@ -5,7 +5,7 @@ import 'package:toghraphy/themes/theme.dart';
 
 class QnaBubble extends StatelessWidget {
   const QnaBubble(
-      {super.key, required this.themeState, required this.isQuestion});
+      {super.key, required this.themeState, required this.isQuestion,});
 
   final ThemeState themeState;
   final bool isQuestion;
@@ -34,19 +34,19 @@ class QnaBubble extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    isQuestion ? "السؤال" : "الجواب",
+                    isQuestion ? 'السؤال' : 'الجواب',
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
-                        color: themeState.secondaryColor),
+                        color: themeState.secondaryColor,),
                   ),
                 ),
                 Text(
                   qnaState.question == null
                       ? ''
                       : isQuestion
-                          ? qnaState.question!.questionContent
-                          : qnaState.question!.answer,
+                          ? qnaState.question!.questionContent!
+                          : qnaState.question!.answer!,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,

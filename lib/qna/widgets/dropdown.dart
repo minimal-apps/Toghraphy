@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toghraphy/qna/bloc/qna_bloc.dart';
-
-import 'package:toghraphy/themes/theme.dart';
 import 'package:toghraphy/themes/bloc/theme_bloc.dart';
+import 'package:toghraphy/themes/theme.dart';
 
 class CustomDropDown extends StatefulWidget {
   CustomDropDown({super.key, required this.items, required this.onChanged});
@@ -26,7 +24,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
       decoration: BoxDecoration(
           color: themeState.primaryColor,
           borderRadius: BorderRadius.circular(13),
-          border: Border.all(color: themeState.secondaryColor)),
+          border: Border.all(color: themeState.secondaryColor),),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           icon: Icon(
@@ -68,7 +66,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
 
 class CustomDropDownBottom extends StatefulWidget {
   CustomDropDownBottom(
-      {super.key, required this.items, required this.onChanged});
+      {super.key, required this.items, required this.onChanged,});
   final void Function(String?) onChanged;
   List<String> items;
 
@@ -89,7 +87,7 @@ class _CustomDropDownBottomState extends State<CustomDropDownBottom> {
       decoration: BoxDecoration(
           color: themeState.primaryColor,
           borderRadius: BorderRadius.circular(13),
-          border: Border.all(color: themeState.secondaryColor)),
+          border: Border.all(color: themeState.secondaryColor),),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           icon: Icon(
@@ -104,6 +102,7 @@ class _CustomDropDownBottomState extends State<CustomDropDownBottom> {
               .map(
                 (e) => DropdownMenuItem<String>(
                   key: UniqueKey(),
+                  value: e,
                   child: Text(
                     e,
                     style: TextStyle(
@@ -111,7 +110,6 @@ class _CustomDropDownBottomState extends State<CustomDropDownBottom> {
                       fontSize: 13,
                     ),
                   ),
-                  value: e,
                 ),
               )
               .toList(),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:toghraphy/app/bloc/app_bloc.dart';
-import 'package:toghraphy/app/view/authentication.dart';
 import 'package:toghraphy/qna/qna.dart';
 
 List<Page> onGeneratePages(PageStatus status, List<Page<dynamic>> pages) {

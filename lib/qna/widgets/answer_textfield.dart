@@ -31,16 +31,16 @@ class AnswerTextField extends StatelessWidget {
             .titleMedium!
             .copyWith(color: themeState.primaryColor.withOpacity(0.4)),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: themeState.bubbleColor, width: 2.0),
+          borderSide: BorderSide(color: themeState.bubbleColor, width: 2),
           borderRadius: BorderRadius.circular(16),
         ),
         labelStyle: Theme.of(context)
             .textTheme
             .titleLarge!
             .copyWith(fontSize: 16, color: themeState.primaryColor),
-        hintText: "اكتب جوابك ...",
+        hintText: 'اكتب جوابك ...',
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: themeState.bubbleColor, width: 2.0),
+          borderSide: BorderSide(color: themeState.bubbleColor, width: 2),
           borderRadius: BorderRadius.circular(16),
         ),
       ),

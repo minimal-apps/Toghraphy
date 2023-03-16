@@ -50,7 +50,7 @@ class _QuestionsViewState extends State<QuestionsView> {
   }
 
   Future<void> showAd() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
+    final connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
       await myBanner.load().onError((error, stackTrace) {
@@ -130,12 +130,14 @@ class _QuestionsViewState extends State<QuestionsView> {
           centerTitle: true,
           backgroundColor: themeState.primaryColor,
           title: Text(
-            "تغرافيا",
+            'تغرافيا',
             style: TextStyle(
-                color: themeState.secondaryColor, fontWeight: FontWeight.bold),
+              color: themeState.secondaryColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(120.0),
+            preferredSize: const Size.fromHeight(120),
             child: DropDownAppBar(themeState: themeState),
           ),
         ),
@@ -150,8 +152,9 @@ class _QuestionsViewState extends State<QuestionsView> {
                     physics: const BouncingScrollPhysics(),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                          minWidth: constraints.maxWidth,
-                          minHeight: constraints.maxHeight),
+                        minWidth: constraints.maxWidth,
+                        minHeight: constraints.maxHeight,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -172,6 +175,7 @@ class _QuestionsViewState extends State<QuestionsView> {
                             child: adWidget,
                           ),
                           TextFieldSection(
+                            isShown: isAnswerShown,
                             themeState: themeState,
                             controller: controller,
                           ),
@@ -202,12 +206,14 @@ class _QuestionsViewState extends State<QuestionsView> {
 
 class TextFieldSection extends StatefulWidget {
   const TextFieldSection({
-    Key? key,
+    super.key,
     required this.controller,
     required this.themeState,
-  }) : super(key: key);
+    required this.isShown,
+  });
   final TextEditingController controller;
   final ThemeState themeState;
+  final bool isShown;
 
   @override
   State<TextFieldSection> createState() => _TextFieldSectionState();
@@ -230,17 +236,18 @@ class _TextFieldSectionState extends State<TextFieldSection> {
         children: [
           Container(
             padding: const EdgeInsets.all(7),
-            margin: EdgeInsets.only(bottom: 10, top: 10),
+            margin: const EdgeInsets.only(bottom: 10, top: 10),
             decoration: BoxDecoration(
               color: widget.themeState.primaryColor,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
-              "جوابك",
+              'جوابك',
               style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  color: widget.themeState.secondaryColor),
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+                color: widget.themeState.secondaryColor,
+              ),
             ),
           ),
           if (optionsState[1])
@@ -258,7 +265,11 @@ class _TextFieldSectionState extends State<TextFieldSection> {
               ),
             ),
           if (optionsState[2])
-            ChoicesWidget(qnaState: qnaState, widget: widget),
+            ChoicesWidget(
+              qnaState: qnaState,
+              widget: widget,
+              isShown: widget.isShown,
+            ),
           InputOptionsWidget(
             onVoice: (text) {
               setState(() {
@@ -267,7 +278,7 @@ class _TextFieldSectionState extends State<TextFieldSection> {
             },
             optionsStateChanged: (list) {
               setState(() {
-                optionsState = list as List<bool>;
+                optionsState = list;
               });
               print(optionsState);
             },
@@ -278,4 +289,3 @@ class _TextFieldSectionState extends State<TextFieldSection> {
     );
   }
 }
-

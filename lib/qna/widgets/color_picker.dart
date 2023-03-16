@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toghraphy/themes/theme.dart';
 
 class ColorPicker extends StatelessWidget {
-  ColorPicker({
+  const ColorPicker({
     super.key,
     required this.themeState,
   });
@@ -21,7 +21,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.deepBrown,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -34,7 +34,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.deepBlue,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -47,7 +47,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.deepRed,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -60,7 +60,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.deepGreen,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -73,7 +73,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.deepPink,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -86,7 +86,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.deepPurple,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -99,7 +99,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.shallowBrown,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -112,7 +112,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.shallowBlue,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -125,7 +125,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.shallowRed,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -138,7 +138,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.shallowGreen,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -151,7 +151,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.shallowPink,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -164,7 +164,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.shallowPurple,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -177,7 +177,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.black,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -190,7 +190,7 @@ class ColorPicker extends StatelessWidget {
           decoration: BoxDecoration(
               color: ThemeColors.white,
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: themeState.secondaryColor)),
+              border: Border.all(),),
           height: 20,
           width: 20,
         ),
@@ -205,9 +205,10 @@ class ColorPicker extends StatelessWidget {
       decoration: BoxDecoration(
           color: themeState.bubbleColor,
           borderRadius: BorderRadius.circular(40),
-          border: Border.all(color: themeState.secondaryColor)),
+          border: Border.all(color: themeState.secondaryColor),),
       child: CoolDropdown(
-        resultIcon: Icon(Icons.expand_circle_down, color: Colors.white),
+        resultIcon:
+            Icon(Icons.expand_circle_down, color: themeState.primaryColor),
         resultWidth: 50,
         iconSize: 15,
         dropdownWidth: 50,
@@ -237,7 +238,7 @@ class ColorPicker extends StatelessWidget {
         selectedItemBD: BoxDecoration(
             border: Border(
                 left: BorderSide(
-                    color: Colors.black.withOpacity(0.7), width: 3))),
+                    color: Colors.black.withOpacity(0.7), width: 3,),),),
         triangleWidth: 10,
         triangleHeight: 10,
         gap: 20,

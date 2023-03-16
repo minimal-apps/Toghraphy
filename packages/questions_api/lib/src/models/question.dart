@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -9,12 +8,12 @@ part 'question.g.dart';
 @JsonSerializable()
 class Question extends Equatable {
   final String id;
-  final String questionContent;
-  final String answer;
-  final String lesson;
-  final String subject;
-  final List<String> choices;
-  final int correctChoiceIndex;
+  final String? questionContent;
+  final String? answer;
+  final String? lesson;
+  final String? subject;
+  final List<String>? choices;
+  final int? correctChoiceIndex;
 
   Question({
     String? id,
@@ -27,7 +26,7 @@ class Question extends Equatable {
   }) : id = id ?? const Uuid().v4();
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         questionContent,
         answer,

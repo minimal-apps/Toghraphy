@@ -1,6 +1,6 @@
 name: toghraphy
 description: A Very Good Project created by Very Good CLI.
-version: 1.0.0+2
+version: 1.2.0+3
 publish_to: none
 
 environment:
@@ -35,6 +35,7 @@ dependencies:
   connectivity_plus: ^3.0.2
   firebase_analytics: ^10.1.4
   speech_to_text: ^6.1.1
+  firebase_crashlytics: ^3.0.17
 dev_dependencies:
   bloc_test: ^9.1.0
   flutter_test:

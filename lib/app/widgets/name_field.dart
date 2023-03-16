@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class NameField extends StatefulWidget {
   const NameField({
-    Key? key,
+    super.key,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final ValueChanged<String> onChanged;
   @override
@@ -13,7 +13,7 @@ class NameField extends StatefulWidget {
 }
 
 class _NameFieldState extends State<NameField> {
-  String maxLength = "0/9";
+  String maxLength = '0/9';
 
   @override
   Widget build(BuildContext context) {
@@ -22,27 +22,27 @@ class _NameFieldState extends State<NameField> {
       onChanged: (value) {
         widget.onChanged(value);
         setState(() {
-          maxLength = "${value.length}/9";
+          maxLength = '${value.length}/9';
         });
       },
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.only(top: 30, left: 20, right: 10),
+        contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 10),
         counterText: maxLength,
-        counterStyle: Theme.of(context).textTheme.headline6,
+        counterStyle: Theme.of(context).textTheme.titleLarge,
         hintStyle: Theme.of(context)
             .textTheme
-            .subtitle1!
+            .titleMedium!
             .copyWith(color: Colors.black),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black, width: 2.0),
+          borderSide: const BorderSide(width: 2),
           borderRadius: BorderRadius.circular(5),
         ),
-        labelText: "اكتب اسمك",
+        labelText: 'اكتب اسمك',
         labelStyle: Theme.of(context)
             .textTheme
-            .headline6!
+            .titleLarge!
             .copyWith(fontSize: 16, color: Colors.black),
-        hintText: "أدخل اسمك",
+        hintText: 'أدخل اسمك',
         prefix: const Padding(
           padding: EdgeInsets.only(right: 10),
           child: Icon(
@@ -51,7 +51,7 @@ class _NameFieldState extends State<NameField> {
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black, width: 2.0),
+          borderSide: const BorderSide(width: 2),
           borderRadius: BorderRadius.circular(5),
         ),
       ),

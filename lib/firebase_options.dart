@@ -66,11 +66,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDKi3VHPzYows9P0JrHISm7R10t5XWg2Lc',
-    appId: '1:106181398821:ios:d3dc17745784a7408acacc',
+    appId: '1:106181398821:ios:63e41e9f8dcb76a78acacc',
     messagingSenderId: '106181398821',
     projectId: 'hg-sip',
     storageBucket: 'hg-sip.appspot.com',
-    iosClientId: '106181398821-r9hvihupns0vpue535odstbrggb2r42p.apps.googleusercontent.com',
-    iosBundleId: 'tech.minimal-apps.toghraphy',
+    iosClientId: '106181398821-nv9lshkj60u58k51qv5lnqrr6sbut1o8.apps.googleusercontent.com',
+    iosBundleId: 'tech.minimal.toghraphy',
   );
 }

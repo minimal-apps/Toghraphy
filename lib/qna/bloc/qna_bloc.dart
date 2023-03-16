@@ -1,10 +1,9 @@
-import 'dart:math';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:questions_api/questions_api.dart';
 import 'package:questions_repository/questions_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'qna_event.dart';
 part 'qna_state.dart';
@@ -29,19 +28,17 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     QnaQuestionRequested event,
     Emitter<QnaState> emit,
   ) async {
-    // final question =
-    //     await _questionsRepository.getRandomQuestion(state.filterLesson);
-    // TODO(redApple): uncomment
-    // emit(state.copyWith(question: question));
-    emit(state.copyWith(
-        question: Question(
-            questionContent: "text",
-            answer: "text",
-            lesson: "text",
-            subject: "text",
-            choices: ["choice 1", "choice 2", "choice 3"],
-            correctChoiceIndex: 0)));
-    print(state.question!.questionContent);
+    final question =
+        await _questionsRepository.getRandomQuestion(state.filterLesson);
+    emit(state.copyWith(question: question));
+    // emit(state.copyWith(
+    //     question: Question(
+    //         questionContent: "text",
+    //         answer: "text",
+    //         lesson: "text",
+    //         subject: "text",
+    //         choices: ["choice 1", "choice 2", "choice 3"],
+    //         correctChoiceIndex: 0)));
   }
 
   Future<void> _onQnaFilterChanged(
@@ -49,7 +46,7 @@ class QnaBloc extends Bloc<QnaEvent, QnaState> {
     Emitter<QnaState> emit,
   ) async {
     emit(state.copyWith(
-        filterLesson: event.filterLesson, filterSubject: event.filterSubject));
+        filterLesson: event.filterLesson, filterSubject: event.filterSubject,),);
     final question =
         await _questionsRepository.getRandomQuestion(state.filterLesson);
     emit(state.copyWith(question: question));

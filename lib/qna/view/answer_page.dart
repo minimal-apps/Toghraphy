@@ -1,12 +1,10 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:toghraphy/app/app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toghraphy/qna/qna.dart';
 import 'package:toghraphy/themes/theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AnswerPage extends StatelessWidget {
   const AnswerPage({super.key});
@@ -50,7 +48,7 @@ class _AnswerViewState extends State<AnswerView> {
   }
 
   Future<void> showAd() async {
-    final connectivityResult = await (Connectivity().checkConnectivity());
+    final connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
       await myBanner.load().onError((error, stackTrace) {
@@ -76,7 +74,7 @@ class _AnswerViewState extends State<AnswerView> {
           backgroundColor: themeState.backgroundColor,
           body: Stack(children: [
             SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -86,11 +84,11 @@ class _AnswerViewState extends State<AnswerView> {
                       child: Column(
                         children: [
                           Text(
-                            "الجواب الصحيح",
+                            'الجواب الصحيح',
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w700,
-                                color: themeState.secondaryColor),
+                                color: themeState.secondaryColor,),
                           ),
                           Container(
                             padding: const EdgeInsets.all(10),
@@ -101,8 +99,8 @@ class _AnswerViewState extends State<AnswerView> {
                             ),
                             child: Text(
                               qnaState.question == null
-                                  ? ""
-                                  : qnaState.question!.answer,
+                                  ? ''
+                                  : qnaState.question!.answer!,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 25,
@@ -119,11 +117,11 @@ class _AnswerViewState extends State<AnswerView> {
                       child: Column(
                         children: [
                           Text(
-                            "جوابك",
+                            'جوابك',
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w700,
-                                color: themeState.secondaryColor),
+                                color: themeState.secondaryColor,),
                           ),
                           Container(
                             padding: const EdgeInsets.all(10),
@@ -170,7 +168,7 @@ class _AnswerViewState extends State<AnswerView> {
                           ),
                           SimpleButton(
                               icon: Icons.close,
-                              text: "جوابك غير صحيح",
+                              text: 'جوابك غير صحيح',
                               color: themeState.secondaryColor,
                               background: themeState.primaryColor,
                               onPressed: () async {
@@ -185,7 +183,7 @@ class _AnswerViewState extends State<AnswerView> {
                                       status: QnaPageStatus.questionPage,
                                     ),
                                   );
-                              })
+                              },)
                         ],
                       ),
                     ),
@@ -216,12 +214,12 @@ class _AnswerViewState extends State<AnswerView> {
                   ),
                   onPressed: () {
                     context.read<QnaBloc>().add(QnaNavigationTriggered(
-                        status: QnaPageStatus.questionPage));
+                        status: QnaPageStatus.questionPage,),);
                   },
                 ),
               ),
             ),
-          ]),
+          ],),
         ),
       ),
     );

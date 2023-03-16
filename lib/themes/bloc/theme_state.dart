@@ -8,7 +8,7 @@ class ThemeState extends Equatable {
   final Color secondaryColor;
   final Color backgroundColor;
   final Color bubbleColor;
-  ThemeState({
+  const ThemeState({
     required this.primaryColor,
     required this.secondaryColor,
     required this.backgroundColor,

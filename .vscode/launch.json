@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
             {
-                    "name": "toghraphy production",
+                    "name": "toghraphy production debug",
                     "program": "lib/main_production.dart",
                     "request": "launch",
-                    "flutterMode": "profile",
+                    "flutterMode": "debug",
                     "type": "dart",
                     "args": [
                             "--flavor",
@@ -16,6 +16,14 @@
                             "-t",
                             "lib/main_production.dart", //development or staging or production
                         ]
-            }
+            },
+            {
+                "name": "toghraphy production run",
+                "program": "lib/main_production.dart",
+                "request": "launch",
+                "type": "dart",
+
+        }
+            
     ]
 }

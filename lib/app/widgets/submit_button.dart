@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../themes/theme.dart';
+import 'package:toghraphy/themes/theme.dart';
 
 class SubmitButton extends StatelessWidget {
   const SubmitButton(
@@ -10,7 +10,7 @@ class SubmitButton extends StatelessWidget {
       this.icon,
       this.background,
       required this.color,
-      required this.onPressed});
+      required this.onPressed,});
   final String text;
   final VoidCallback onPressed;
   final IconData? icon;
@@ -25,7 +25,7 @@ class SubmitButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               side: BorderSide(
                 color: color,
-              )),
+              ),),
           backgroundColor: background ?? themeState.secondaryColor,
         ),
         onPressed: onPressed,
@@ -35,6 +35,6 @@ class SubmitButton extends StatelessWidget {
             text,
             style: TextStyle(color: color, fontSize: 20),
           ),
-        ));
+        ),);
   }
 }

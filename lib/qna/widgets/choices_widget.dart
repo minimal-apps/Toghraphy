@@ -6,49 +6,90 @@ import 'package:toghraphy/qna/qna.dart';
 import 'package:toghraphy/themes/theme.dart';
 
 class ChoicesWidget extends StatefulWidget {
-  const ChoicesWidget({
-    super.key,
-    required this.qnaState,
-    required this.widget,
-  });
+  const ChoicesWidget(
+      {super.key,
+      required this.qnaState,
+      required this.widget,
+      required this.isShown,});
 
   final QnaState qnaState;
   final TextFieldSection widget;
+  final bool isShown;
 
   @override
   State<ChoicesWidget> createState() => _ChoicesWidgetState();
 }
 
 class _ChoicesWidgetState extends State<ChoicesWidget> {
-  List<bool> values = [false, false, false];
+  late List<bool> values;
+  int clicked = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeState = context.watch<ThemeBloc>().state;
 
-    return Column(
-      children: widget.qnaState.question!.choices.mapIndexed((index, e) {
-        return ListTile(
-          leading: Checkbox(
-              overlayColor: const MaterialStatePropertyAll(Colors.transparent),
-              activeColor: themeState.secondaryColor,
-              checkColor: themeState.primaryColor,
-              value: values[index],
-              onChanged: (v) {
-                values = [false, false, false];
-                setState(() {
-                  values[index] = !values[index];
-                });
-              },),
-          title: Text(
-            e,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: widget.widget.themeState.primaryColor,
-            ),
-          ),
-        );
-      }).toList(),
-    );
+    values = widget.qnaState.question!.choices != null
+        ? List.generate(
+            widget.qnaState.question!.choices!.length,
+            (index) => false,
+          )
+        : [];
+    values.isNotEmpty ? values[clicked] = true : (){}();
+
+    return widget.qnaState.question!.choices != null &&
+            widget.qnaState.question!.choices!.isNotEmpty
+        ? Column(
+            children: widget.qnaState.question!.choices!.mapIndexed((index, e) {
+              return ListTile(
+                leading: Checkbox(
+                  overlayColor:
+                      const MaterialStatePropertyAll(Colors.transparent),
+                  activeColor: themeState.secondaryColor,
+                  checkColor:
+                      widget.isShown ? Colors.green : themeState.primaryColor,
+                  value: widget.isShown
+                      ? (index == widget.qnaState.question!.correctChoiceIndex!
+                          ? true
+                          : false)
+                      : values[index],
+                  onChanged: (v) {
+                    if (!widget.isShown) {
+                      values = List.generate(
+                        widget.qnaState.question!.choices!.length,
+                        (index) => false,
+                      );
+                      setState(() {
+                        values[index] = !values[index];
+                        clicked = index;
+                      });
+                    } else {
+                      setState(() {
+                        values = List.generate(
+                          widget.qnaState.question!.choices!.length,
+                          (index) => false,
+                        );
+                        final index =
+                            widget.qnaState.question!.correctChoiceIndex!;
+                        values[index] = !values[index];
+                      });
+                    }
+                  },
+                ),
+                title: Text(
+                  e,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: widget.widget.themeState.primaryColor,
+                  ),
+                ),
+              );
+            }).toList(),
+          )
+        : const Text('هذا السؤال لا يتوفر على اختيارات');
   }
 }
